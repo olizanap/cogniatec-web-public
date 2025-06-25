@@ -12,18 +12,14 @@ RUN npm run build
 # Production stage
 FROM nginx:alpine
 
-# Copy the start script
-COPY start.sh /start.sh
-RUN chmod +x /start.sh
-
-# Copy the nginx config template
-COPY nginx.conf /etc/nginx/conf.d/default.conf.template
+# Copy the nginx config
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 # Copy the built app
 COPY --from=build /app/build /usr/share/nginx/html
 
-# Expose port (will be overridden by PORT env var)
+# Expose port
 EXPOSE 8080
 
-# Use the start script
-CMD ["/start.sh"] 
+# Start nginx
+CMD ["nginx", "-g", "daemon off;"] 
