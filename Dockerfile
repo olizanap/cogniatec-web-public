@@ -12,9 +12,6 @@ RUN npm run build
 # Production stage
 FROM nginx:alpine
 
-# Install envsubst
-RUN apk add --no-cache bash
-
 # Copy the start script
 COPY start.sh /start.sh
 RUN chmod +x /start.sh
