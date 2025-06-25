@@ -12,9 +12,21 @@ RUN npm run build
 # Production stage
 FROM nginx:alpine
 
-COPY --from=build /app/build /usr/share/nginx/html
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+# Install envsubst
+RUN apk add --no-cache bash
 
+# Copy the start script
+COPY start.sh /start.sh
+RUN chmod +x /start.sh
+
+# Copy the nginx config template
+COPY nginx.conf /etc/nginx/conf.d/default.conf.template
+
+# Copy the built app
+COPY --from=build /app/build /usr/share/nginx/html
+
+# Expose port (will be overridden by PORT env var)
 EXPOSE 8080
 
-CMD ["nginx", "-g", "daemon off;"] 
+# Use the start script
+CMD ["/start.sh"] 
