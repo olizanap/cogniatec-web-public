@@ -9,11 +9,13 @@ import Portfolio from './components/Portfolio';
 import ContactForm from './components/ContactForm';
 import Footer from './components/Footer';
 import Navbar from './components/Navbar';
+import BannerCarousel from './components/BannerCarousel';
 
 function App() {
   const [mode, setMode] = useState('dark');
   const theme = useMemo(() => getTheme(mode), [mode]);
   const contactRef = useRef(null);
+  const [heroResetKey, setHeroResetKey] = useState(0);
 
   const handleThemeChange = () => {
     setMode((prev) => (prev === 'light' ? 'dark' : 'light'));
@@ -23,6 +25,20 @@ function App() {
     if (contactRef.current) {
       contactRef.current.scrollIntoView({ behavior: 'smooth' });
     }
+  };
+
+  const handleHeroReset = () => {
+    setHeroResetKey((prev) => prev + 1);
+  };
+
+  // Estilo común para todas las secciones
+  const sectionStyle = {
+    minHeight: { xs: '80vh', md: '100vh' },
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    position: 'relative',
+    overflow: 'hidden',
   };
 
   return (
@@ -51,54 +67,45 @@ function App() {
         }}
       >
         <Box sx={{ position: 'relative', zIndex: 1 }}>
-          <Navbar mode={mode} onThemeChange={handleThemeChange} />
+          <Navbar mode={mode} onThemeChange={handleThemeChange} onHeroReset={handleHeroReset} />
           
-          {/* Logo Section with improved styling */}
-          <Box 
-            sx={{ 
-              display: 'flex', 
-              alignItems: 'center', 
-              justifyContent: 'center', 
-              py: 4,
-              background: mode === 'dark'
-                ? 'linear-gradient(135deg, rgba(0, 255, 170, 0.1) 0%, rgba(0, 119, 182, 0.1) 100%)'
-                : 'linear-gradient(135deg, rgba(0, 119, 182, 0.05) 0%, rgba(0, 255, 170, 0.05) 100%)',
-              borderRadius: '0 0 32px 32px',
-              mx: 2,
-              mb: 4,
-            }}
-          >
-            <Box
-              component="img"
-              src={logo}
-              alt="CogniaTec Logo"
-              sx={{
-                height: { xs: 180, sm: 220, md: 253 },
-                width: { xs: 180, sm: 220, md: 253 },
-                objectFit: 'contain',
-                filter: mode === 'dark' ? 'drop-shadow(0 8px 16px rgba(0, 255, 170, 0.3))' : 'drop-shadow(0 8px 16px rgba(0, 119, 182, 0.2))',
-                transition: 'all 0.3s ease',
-                '&:hover': {
-                  transform: 'scale(1.05)',
-                  filter: mode === 'dark' ? 'drop-shadow(0 12px 24px rgba(0, 255, 170, 0.4))' : 'drop-shadow(0 12px 24px rgba(0, 119, 182, 0.3))',
-                }
-              }}
-            />
+          {/* Banner Carrusel */}
+          <BannerCarousel />
+
+          {/* Hero Section */}
+          <Box id="hero-section" sx={{ pt: { xs: 3, md: 4 } }}>
+            <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 1 }}>
+              <HeroSection onCTAClick={handleCTAClick} resetKey={heroResetKey} />
+            </Container>
           </Box>
 
-          <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 1 }}>
-            <HeroSection onCTAClick={handleCTAClick} />
-            <Services />
-            <Box id="about-section" sx={{ scrollMarginTop: 90, py: 2 }}>
+          {/* Services Section */}
+          <Box sx={sectionStyle} id="services-section">
+            <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 1 }}>
+              <Services />
+            </Container>
+          </Box>
+
+          {/* About Section */}
+          <Box sx={sectionStyle} id="about-section">
+            <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 1 }}>
               <About />
-            </Box>
-            <Box id="portfolio-section" sx={{ scrollMarginTop: 90, py: 2 }}>
+            </Container>
+          </Box>
+
+          {/* Portfolio Section */}
+          <Box sx={sectionStyle} id="portfolio-section">
+            <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 1 }}>
               <Portfolio />
-            </Box>
-            <Box id="contact-section" ref={contactRef} sx={{ scrollMarginTop: 90, py: 2 }}>
+            </Container>
+          </Box>
+
+          {/* Contact Section */}
+          <Box sx={sectionStyle} id="contact-section" ref={contactRef}>
+            <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 1 }}>
               <ContactForm />
-            </Box>
-          </Container>
+            </Container>
+          </Box>
           
           <Footer />
         </Box>
