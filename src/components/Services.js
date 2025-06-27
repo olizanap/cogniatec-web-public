@@ -46,69 +46,69 @@ const Services = () => {
 
   return (
     <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', py: 6 }}>
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.3 }}
-        transition={{ duration: 0.8 }}
-      >
-        <Typography 
-          variant="h2" 
-          sx={{
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.8 }}
+        >
+          <Typography 
+            variant="h2" 
+            sx={{
             fontWeight: 800,
-            textAlign: 'center',
+              textAlign: 'center',
             mb: 3,
-            background: isDark
-              ? 'linear-gradient(135deg, #ffffff 0%, #00FFAA 100%)'
-              : 'linear-gradient(135deg, #1a202c 0%, #0077B6 100%)',
-            backgroundClip: 'text',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
+              background: isDark
+                ? 'linear-gradient(135deg, #ffffff 0%, #00FFAA 100%)'
+                : 'linear-gradient(135deg, #1a202c 0%, #0077B6 100%)',
+              backgroundClip: 'text',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
             fontSize: { xs: '2.5rem', md: '3.5rem' },
             letterSpacing: '-0.02em',
             textShadow: isDark ? '0 4px 20px rgba(0, 255, 170, 0.3)' : '0 4px 20px rgba(0, 119, 182, 0.3)',
-          }}
-        >
-          Nuestros Servicios
-        </Typography>
-        <Typography 
-          variant="h6" 
-          sx={{ 
-            textAlign: 'center', 
+            }}
+          >
+            Nuestros Servicios
+          </Typography>
+          <Typography 
+            variant="h6" 
+            sx={{ 
+              textAlign: 'center', 
             mb: 8,
-            color: 'text.secondary',
+              color: 'text.secondary',
             maxWidth: '700px',
-            mx: 'auto',
-            fontWeight: 400,
+              mx: 'auto',
+              fontWeight: 400,
             fontSize: { xs: '1.1rem', md: '1.3rem' },
             lineHeight: 1.5,
-          }}
-        >
-          Soluciones tecnológicas integrales para impulsar tu transformación digital
-        </Typography>
-      </motion.div>
+            }}
+          >
+            Soluciones tecnológicas integrales para impulsar tu transformación digital
+          </Typography>
+        </motion.div>
 
       <Grid container spacing={4} justifyContent="center" alignItems="center" sx={{ maxWidth: 1200, mx: 'auto' }}>
-        {services.map((service, i) => (
+          {services.map((service, i) => (
           <Grid item xs={12} md={4} key={service.title} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-            <motion.div
-              custom={i}
-              initial="initial"
-              whileInView="animate"
-              viewport={{ once: true, amount: 0.3 }}
-              variants={cardVariants}
-            >
-              <Card 
-                sx={{ 
+              <motion.div
+                custom={i}
+                initial="initial"
+                whileInView="animate"
+                viewport={{ once: true, amount: 0.3 }}
+                variants={cardVariants}
+              >
+                <Card 
+                  sx={{ 
                   height: 360,
                   width: 360,
                   minWidth: 320,
                   maxWidth: 360,
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
                   justifyContent: 'center',
-                  textAlign: 'center',
+                    textAlign: 'center',
                   borderRadius: 6,
                   p: 4,
                   background: isDark
@@ -135,31 +135,31 @@ const Services = () => {
                     borderRadius: 6,
                     pointerEvents: 'none',
                   },
-                  '&:hover': { 
+                    '&:hover': { 
                     transform: 'translateY(-12px) scale(1.03)',
-                    boxShadow: isDark
+                      boxShadow: isDark
                       ? '0 20px 40px rgba(0, 255, 170, 0.18)'
                       : '0 20px 40px rgba(0, 119, 182, 0.13)',
-                  }
-                }}
-              >
-                <Box 
-                  sx={{ 
+                    }
+                  }}
+                >
+                    <Box
+                      sx={{
                     mb: 3, 
-                    display: 'flex', 
+                        display: 'flex',
                     alignItems: 'center', 
-                    justifyContent: 'center', 
+                        justifyContent: 'center',
                     width: 70, 
                     height: 70, 
-                    borderRadius: '50%', 
-                    background: isDark
+                        borderRadius: '50%',
+                        background: isDark
                       ? `linear-gradient(135deg, ${service.color === 'primary' ? 'rgba(0, 255, 170, 0.13)' : 'rgba(0, 119, 182, 0.13)'} 0%, transparent 100%)`
                       : `linear-gradient(135deg, ${service.color === 'primary' ? 'rgba(0, 255, 170, 0.09)' : 'rgba(0, 119, 182, 0.09)'} 0%, transparent 100%)`,
                     boxShadow: isDark
                       ? `0 0 16px 2px ${service.color === 'primary' ? 'rgba(0,255,170,0.18)' : 'rgba(0,119,182,0.18)'}`
                       : `0 0 12px 2px ${service.color === 'primary' ? 'rgba(0,255,170,0.10)' : 'rgba(0,119,182,0.10)'}`,
-                  }}
-                >
+                      }}
+                    >
                   <Box 
                     sx={{ 
                       color: service.color === 'primary' ? '#00FFAA' : '#0077B6',
@@ -169,27 +169,27 @@ const Services = () => {
                       transition: 'all 0.3s',
                     }}
                   >
-                    {service.icon}
-                  </Box>
-                </Box>
-                <Typography 
-                  variant="h5" 
-                  sx={{ 
+                        {service.icon}
+                      </Box>
+                    </Box>
+                    <Typography 
+                      variant="h5" 
+                      sx={{ 
                     fontWeight: 800, 
-                    mb: 2, 
-                    color: 'text.primary', 
+                        mb: 2,
+                        color: 'text.primary',
                     fontSize: { xs: '1.2rem', md: '1.4rem' },
                     lineHeight: 1.3,
                     letterSpacing: '-0.01em',
-                  }}
-                >
-                  {service.title}
-                </Typography>
-                <Typography 
-                  variant="body1" 
-                  sx={{ 
-                    color: 'text.secondary', 
-                    lineHeight: 1.7, 
+                      }}
+                    >
+                      {service.title}
+                    </Typography>
+                    <Typography 
+                      variant="body1" 
+                      sx={{ 
+                        color: 'text.secondary',
+                        lineHeight: 1.7,
                     fontSize: { xs: '1rem', md: '1.08rem' }, 
                     overflow: 'hidden', 
                     textOverflow: 'ellipsis', 
@@ -198,16 +198,16 @@ const Services = () => {
                     WebkitBoxOrient: 'vertical', 
                     width: '100%',
                     fontWeight: 400,
-                  }}
-                >
-                  {service.desc}
-                </Typography>
-              </Card>
-            </motion.div>
-          </Grid>
-        ))}
-      </Grid>
-    </Box>
+                      }}
+                    >
+                      {service.desc}
+                    </Typography>
+                </Card>
+              </motion.div>
+            </Grid>
+          ))}
+        </Grid>
+      </Box>
   );
 };
 

@@ -81,8 +81,8 @@ function App() {
 
           {/* Services Section */}
           <Box sx={sectionStyle} id="services-section">
-            <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 1 }}>
-              <Services />
+          <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 1 }}>
+            <Services />
             </Container>
           </Box>
 
@@ -91,21 +91,21 @@ function App() {
             <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 1 }}>
               <About />
             </Container>
-          </Box>
+            </Box>
 
           {/* Portfolio Section */}
           <Box sx={sectionStyle} id="portfolio-section">
             <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 1 }}>
               <Portfolio />
             </Container>
-          </Box>
+            </Box>
 
           {/* Contact Section */}
           <Box sx={sectionStyle} id="contact-section" ref={contactRef}>
             <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 1 }}>
               <ContactForm />
             </Container>
-          </Box>
+            </Box>
           
           <Footer />
         </Box>
