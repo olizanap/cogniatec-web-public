@@ -33,7 +33,7 @@ const About = () => {
             textShadow: isDark ? '0 4px 32px #00FFAA' : '0 4px 32px #00FFAA',
           }}
         >
-          Sobre Nosotros CogniaTEC
+          Sobre Nosotros
         </Typography>
         <Typography
           variant="h6"
