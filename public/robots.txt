@@ -1,0 +1,6 @@
+# https://www.robotstxt.org/robotstxt.html
+User-agent: *
+Disallow:
+
+Sitemap: https://www.cogniatec.com/sitemap.xml
+Host: https://www.cogniatec.com/
