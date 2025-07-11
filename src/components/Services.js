@@ -21,11 +21,7 @@ const services = [
   },
   {
     icon: <IntegrationInstructionsIcon sx={{ fontSize: 44 }} />, 
-<<<<<<< HEAD
     title: 'Integración de plataformas inteligentes',
-=======
-    title: 'Integración de plataformas',
->>>>>>> eb8817f (Optimización SEO y accesibilidad)
     desc: 'Conectamos sistemas y plataformas para optimizar la eficiencia operativa y crear flujos de trabajo automatizados.',
     color: 'primary'
   },
@@ -201,17 +197,16 @@ const Services = () => {
                     WebkitLineClamp: 4, 
                     WebkitBoxOrient: 'vertical', 
                     width: '100%',
-                    fontWeight: 400,
                       }}
                     >
                       {service.desc}
                     </Typography>
-                </Card>
-              </motion.div>
-            </Grid>
-          ))}
-        </Grid>
-      </Box>
+                  </Card>
+                </motion.div>
+              </Grid>
+            ))}
+          </Grid>
+    </Box>
   );
 };
 
