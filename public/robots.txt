@@ -1,3 +1,9 @@
 # https://www.robotstxt.org/robotstxt.html
 User-agent: *
 Disallow:
+<<<<<<< HEAD
+=======
+
+Sitemap: https://www.cogniatec.com/sitemap.xml
+Host: https://www.cogniatec.com/
+>>>>>>> eb8817f (Optimización SEO y accesibilidad)
