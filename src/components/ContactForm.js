@@ -53,7 +53,9 @@ const ContactForm = () => {
     setLoading(true);
 
     try {
-      const response = await fetch('/api/contact', {
+      // Determinar la URL base del API
+      const API_URL = process.env.REACT_APP_API_URL || '';
+      const response = await fetch(`${API_URL}/api/contact`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
