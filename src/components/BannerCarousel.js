@@ -7,10 +7,7 @@ import { EffectFade, Autoplay } from 'swiper/modules';
 import logo from '../assets/logo.png';
 import Glaxia1 from '../assets/Glaxia1.jpg';
 import Glaxia2 from '../assets/Glaxia2.jpg';
-<<<<<<< HEAD
-=======
 import IA3 from '../assets/IA3.png';
->>>>>>> eb8817f (Optimización SEO y accesibilidad)
 
 const slides = [
   {
@@ -25,11 +22,7 @@ const slides = [
     keyword: 'Innovación',
   },
   {
-<<<<<<< HEAD
-    img: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=900&q=80',
-=======
     img: IA3,
->>>>>>> eb8817f (Optimización SEO y accesibilidad)
     alt: 'Cerebro digital IA',
     keyword: 'Inteligencia Artificial',
   },
@@ -111,18 +104,6 @@ const BannerCarousel = () => (
                     sx={{
                       height: { xs: 180, md: 260 },
                       width: 'auto',
-<<<<<<< HEAD
-                      filter: 'brightness(0.85) drop-shadow(0 4px 32px #00ffaa) drop-shadow(0 0 16px #00ffaa88)',
-                      animation: 'floatLogo 3.5s ease-in-out infinite, spinLogo 12s linear infinite',
-                      '@keyframes floatLogo': {
-                        '0%': { transform: 'translateY(0) scale(1)' },
-                        '50%': { transform: 'translateY(-18px) scale(1.04)' },
-                        '100%': { transform: 'translateY(0) scale(1)' },
-                      },
-                      '@keyframes spinLogo': {
-                        '0%': { transform: 'rotate(0deg)' },
-                        '100%': { transform: 'rotate(360deg)' },
-=======
                       position: 'relative',
                       zIndex: 4,
                       filter: 'brightness(0.95) drop-shadow(0 4px 32px #00ffaa) drop-shadow(0 0 16px #00ffaa88)',
@@ -153,7 +134,6 @@ const BannerCarousel = () => (
                         '0%': { opacity: 0.7, boxShadow: '0 0 64px 24px #00ffaa55' },
                         '50%': { opacity: 1, boxShadow: '0 0 96px 36px #00ffaa99' },
                         '100%': { opacity: 0.7, boxShadow: '0 0 64px 24px #00ffaa55' },
->>>>>>> eb8817f (Optimización SEO y accesibilidad)
                       },
                     }}
                   />
