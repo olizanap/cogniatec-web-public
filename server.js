@@ -6,18 +6,30 @@ require('dotenv').config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// Middleware
+// --- CORS robusto para producción y desarrollo ---
 const allowedOrigins = [
   'https://www.cogniatec.com',
   'http://localhost:3000'
 ];
 
 app.use(cors({
-  origin: allowedOrigins,
+  origin: function (origin, callback) {
+    // Permitir solicitudes sin origin (como Postman) o de los orígenes permitidos
+    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('No permitido por CORS'));
+    }
+  },
   methods: ['GET', 'POST', 'OPTIONS'],
-  credentials: true
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true,
 }));
+
+// Responder explícitamente a todas las OPTIONS
 app.options('*', cors());
+
+// Middleware para JSON
 app.use(express.json());
 
 // Configurar el transportador de correo
