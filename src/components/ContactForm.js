@@ -23,6 +23,10 @@ const ContactForm = () => {
     const { name, value } = e.target;
     setForm({ ...form, [name]: value });
     
+    // Limpiar errores al escribir
+    setError('');
+    setSuccess(false);
+    
     // Validar email en tiempo real
     if (name === 'email') {
       if (value && !validateEmail(value)) {
@@ -39,13 +43,24 @@ const ContactForm = () => {
     setSuccess(false);
     
     // Validar campos requeridos
-    if (!form.name || !form.email || !form.message) {
+    if (!form.name.trim() || !form.email.trim() || !form.message.trim()) {
       setError('Por favor, completa todos los campos.');
       return;
     }
 
+    // Validar longitud mínima
+    if (form.name.trim().length < 2) {
+      setError('El nombre debe tener al menos 2 caracteres.');
+      return;
+    }
+
+    if (form.message.trim().length < 10) {
+      setError('El mensaje debe tener al menos 10 caracteres.');
+      return;
+    }
+
     // Validar formato de email
-    if (!validateEmail(form.email)) {
+    if (!validateEmail(form.email.trim())) {
       setError('Por favor, ingresa un correo electrónico válido.');
       return;
     }
@@ -53,38 +68,63 @@ const ContactForm = () => {
     setLoading(true);
 
     try {
-      // Determinar la URL base del API
-      const API_URL = process.env.REACT_APP_API_URL || '';
-      const response = await fetch(`${API_URL}/api/contact`, {
+      // Usar URL relativa para evitar problemas de CORS
+      const endpoint = '/api/contact';
+      
+      console.log('📤 Enviando formulario a:', endpoint);
+      
+      const response = await fetch(endpoint, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          name: form.name,
-          email: form.email,
-          message: form.message
+          name: form.name.trim(),
+          email: form.email.trim().toLowerCase(),
+          message: form.message.trim()
         }),
       });
 
-      const contentType = response.headers.get('content-type');
+      console.log('📥 Respuesta recibida:', response.status, response.statusText);
+
       if (!response.ok) {
-        throw new Error('Error en la respuesta del servidor');
-      }
-      if (contentType && contentType.includes('application/json')) {
-        const data = await response.json();
-        if (data.success) {
-          setSuccess(true);
-          setForm({ name: '', email: '', message: '' });
-        } else {
-          throw new Error(data.message || 'Error en el envío');
+        // Intentar obtener mensaje de error del servidor
+        let errorMessage = 'Error en la respuesta del servidor';
+        try {
+          const errorData = await response.json();
+          errorMessage = errorData.message || errorMessage;
+        } catch (parseError) {
+          console.error('Error parseando respuesta de error:', parseError);
         }
+        
+        throw new Error(errorMessage);
+      }
+      
+      const data = await response.json();
+      if (data.success) {
+        setSuccess(true);
+        setForm({ name: '', email: '', message: '' });
+        console.log('✅ Mensaje enviado exitosamente:', data.messageId);
       } else {
-        throw new Error('Respuesta inesperada del servidor');
+        throw new Error(data.message || 'Error en el envío');
       }
     } catch (error) {
-      console.error('Error sending email:', error);
-      setError('Hubo un error al enviar el mensaje. Por favor, intenta nuevamente.');
+      console.error('❌ Error sending email:', error);
+      
+      // Determinar el tipo de error para mostrar mensaje más específico
+      let errorMessage = 'Hubo un error al enviar el mensaje. Por favor, intenta nuevamente.';
+      
+      if (error.message.includes('Failed to fetch') || error.message.includes('NetworkError')) {
+        errorMessage = 'Error de conexión. Verifica tu conexión a internet e intenta nuevamente.';
+      } else if (error.message.includes('CORS')) {
+        errorMessage = 'Error de configuración del servidor. Por favor, contacta al administrador.';
+      } else if (error.message.includes('timeout')) {
+        errorMessage = 'La solicitud tardó demasiado. Por favor, intenta nuevamente.';
+      } else if (error.message) {
+        errorMessage = error.message;
+      }
+      
+      setError(errorMessage);
     } finally {
       setLoading(false);
     }

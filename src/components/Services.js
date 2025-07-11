@@ -2,13 +2,13 @@ import React from 'react';
 import { Box, Typography, Card, Grid } from '@mui/material';
 import { motion } from 'framer-motion';
 import { useTheme } from '@mui/material/styles';
-import IntegrationInstructionsIcon from '@mui/icons-material/IntegrationInstructions';
-import PsychologyAltIcon from '@mui/icons-material/PsychologyAlt';
+import SmartToyIcon from '@mui/icons-material/SmartToy';
 import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
+import IntegrationInstructionsIcon from '@mui/icons-material/IntegrationInstructions';
 
 const services = [
   {
-    icon: <PsychologyAltIcon sx={{ fontSize: 44 }} />, 
+    icon: <SmartToyIcon sx={{ fontSize: 44 }} />, 
     title: 'Desarrollo de software con IA',
     desc: 'Creamos soluciones inteligentes y personalizadas que aprenden y automatizan procesos complejos para optimizar tu negocio.',
     color: 'primary'
@@ -21,7 +21,7 @@ const services = [
   },
   {
     icon: <IntegrationInstructionsIcon sx={{ fontSize: 44 }} />, 
-    title: 'Integración de plataformas inteligentes',
+    title: 'Integración de plataformas',
     desc: 'Conectamos sistemas y plataformas para optimizar la eficiencia operativa y crear flujos de trabajo automatizados.',
     color: 'primary'
   },

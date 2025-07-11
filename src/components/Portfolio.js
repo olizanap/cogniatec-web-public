@@ -2,13 +2,13 @@ import React from 'react';
 import { Box, Typography, Card, Grid } from '@mui/material';
 import { motion } from 'framer-motion';
 import { useTheme } from '@mui/material/styles';
-import AutoGraphIcon from '@mui/icons-material/AutoGraph';
-import InsightsIcon from '@mui/icons-material/Insights';
 import SmartToyIcon from '@mui/icons-material/SmartToy';
+import IntegrationInstructionsIcon from '@mui/icons-material/IntegrationInstructions';
+import InsightsIcon from '@mui/icons-material/Insights';
 
 const projects = [
   {
-    icon: <AutoGraphIcon sx={{ fontSize: 44 }} />, 
+    icon: <IntegrationInstructionsIcon sx={{ fontSize: 44 }} />, 
     title: 'AutoMov',
     desc: 'AutoMov es una plataforma digital que simplifica y digitaliza el proceso de transferencia de vehículos en Chile, eliminando la necesidad de hacer filas en el Registro Civil y reduciendo significativamente los tiempos de tramitación.',
     color: 'primary'

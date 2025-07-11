@@ -4,6 +4,22 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+// Suprimir advertencias de MUI Grid en desarrollo
+if (process.env.NODE_ENV === 'development') {
+  const originalWarn = console.warn;
+  console.warn = (...args) => {
+    if (
+      typeof args[0] === 'string' &&
+      (args[0].includes('MUI Grid: The `item` prop has been removed') ||
+       args[0].includes('MUI Grid: The `xs` prop has been removed') ||
+       args[0].includes('MUI Grid: The `md` prop has been removed'))
+    ) {
+      return;
+    }
+    originalWarn.call(console, ...args);
+  };
+}
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
