@@ -65,13 +65,20 @@ const ContactForm = () => {
         }),
       });
 
-      const data = await response.json();
-      
-      if (data.success) {
-        setSuccess(true);
-        setForm({ name: '', email: '', message: '' });
+      const contentType = response.headers.get('content-type');
+      if (!response.ok) {
+        throw new Error('Error en la respuesta del servidor');
+      }
+      if (contentType && contentType.includes('application/json')) {
+        const data = await response.json();
+        if (data.success) {
+          setSuccess(true);
+          setForm({ name: '', email: '', message: '' });
+        } else {
+          throw new Error(data.message || 'Error en el envío');
+        }
       } else {
-        throw new Error(data.message || 'Error en el envío');
+        throw new Error('Respuesta inesperada del servidor');
       }
     } catch (error) {
       console.error('Error sending email:', error);
