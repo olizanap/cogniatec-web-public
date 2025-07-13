@@ -11,33 +11,8 @@ const PORT = process.env.PORT || 5000;
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ limit: '10mb', extended: true }));
 
-// --- CORS robusto para producción y desarrollo ---
-const allowedOrigins = [
-  'https://www.cogniatec.com',
-  'https://cogniatec.com',
-  'https://cogniatec-web-public-772001390230.us-east1.run.app',
-  'http://localhost:3000',
-  'http://localhost:5000'
-];
-
-app.use(cors({
-  origin: function (origin, callback) {
-    // Permitir solicitudes sin origin (como Postman) o de los orígenes permitidos
-    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
-      callback(null, true);
-    } else {
-      console.log('CORS bloqueado para origen:', origin);
-      callback(new Error('No permitido por CORS'));
-    }
-  },
-  methods: ['GET', 'POST', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-  credentials: true,
-  maxAge: 86400 // Cache preflight por 24 horas
-}));
-
-// Responder explícitamente a todas las OPTIONS
-app.options('*', cors());
+// CORS simple y funcional
+app.use(cors());
 
 // Verificar variables de entorno críticas
 if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
@@ -239,13 +214,15 @@ app.get('/api/health', (req, res) => {
   });
 });
 
-// Servir archivos estáticos del frontend SOLO en producción
+// Servir archivos estáticos del frontend en producción
 if (process.env.NODE_ENV === 'production') {
+  console.log('🚀 Modo producción: Sirviendo frontend y API');
+  
   // Servir archivos estáticos desde la carpeta build
   app.use(express.static(path.join(__dirname, 'build')));
 
-  // Manejar todas las rutas del frontend (excepto las de API)
-  app.get(/^(?!\/api).*/, (req, res) => {
+  // Manejar todas las rutas del frontend (SPA routing)
+  app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'build', 'index.html'));
   });
 } else {
@@ -258,8 +235,21 @@ app.listen(PORT, () => {
   console.log(`🚀 Servidor corriendo en puerto ${PORT}`);
   console.log(`📧 Endpoint de contacto: http://localhost:${PORT}/api/contact`);
   console.log(`🔍 Health check: http://localhost:${PORT}/api/health`);
-  console.log(`✅ CORS configurado para orígenes:`, allowedOrigins);
+  console.log(`✅ CORS configurado correctamente`);
+  console.log(`🌍 Entorno: ${process.env.NODE_ENV || 'development'}`);
   if (process.env.NODE_ENV === 'production') {
     console.log(`🌐 Serviendo frontend desde: ${path.join(__dirname, 'build')}`);
+    console.log(`🔒 Modo producción activado`);
   }
+});
+
+// Manejo de errores no capturados
+process.on('uncaughtException', (err) => {
+  console.error('❌ Error no capturado:', err);
+  process.exit(1);
+});
+
+process.on('unhandledRejection', (reason, promise) => {
+  console.error('❌ Promesa rechazada no manejada:', reason);
+  process.exit(1);
 }); 
