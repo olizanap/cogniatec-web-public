@@ -1,7 +1,6 @@
 import React, { useMemo, useState, useRef } from 'react';
 import { ThemeProvider, CssBaseline, Container, Box } from '@mui/material';
 import { getTheme } from './theme';
-import logo from './assets/logo.png';
 import HeroSection from './components/HeroSection';
 import Services from './components/Services';
 import About from './components/About';

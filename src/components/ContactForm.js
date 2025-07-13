@@ -68,8 +68,8 @@ const ContactForm = () => {
     setLoading(true);
 
     try {
-      // Usar URL relativa para evitar problemas de CORS
-      const endpoint = '/api/contact';
+      // Usar URL externa para el backend (puedes cambiar esto por tu backend real)
+      const endpoint = 'https://cogniatec-backend.onrender.com/api/contact';
       
       console.log('📤 Enviando formulario a:', endpoint);
       
