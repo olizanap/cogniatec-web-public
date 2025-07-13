@@ -68,8 +68,8 @@ const ContactForm = () => {
     setLoading(true);
 
     try {
-      // Usar URL externa para el backend (puedes cambiar esto por tu backend real)
-      const endpoint = 'https://cogniatec-backend.onrender.com/api/contact';
+      // Usar el backend local (mismo servidor)
+      const endpoint = '/api/contact';
       
       console.log('📤 Enviando formulario a:', endpoint);
       
