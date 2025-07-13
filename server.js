@@ -2,7 +2,12 @@ const express = require('express');
 const cors = require('cors');
 const nodemailer = require('nodemailer');
 const path = require('path');
-require('dotenv').config();
+// Cargar variables de entorno solo si el archivo existe
+try {
+  require('dotenv').config();
+} catch (error) {
+  console.log('⚠️  Archivo .env no encontrado, usando variables de entorno del sistema');
+}
 
 const app = express();
 const PORT = process.env.PORT || 8080;
@@ -237,9 +242,21 @@ app.listen(PORT, () => {
   console.log(`🔍 Health check: http://localhost:${PORT}/api/health`);
   console.log(`✅ CORS configurado correctamente`);
   console.log(`🌍 Entorno: ${process.env.NODE_ENV || 'development'}`);
+  console.log(`📁 Directorio actual: ${__dirname}`);
+  console.log(`📦 Variables de entorno disponibles:`, Object.keys(process.env).filter(key => key.includes('EMAIL') || key.includes('PORT') || key.includes('NODE')));
+  
   if (process.env.NODE_ENV === 'production') {
     console.log(`🌐 Serviendo frontend desde: ${path.join(__dirname, 'build')}`);
     console.log(`🔒 Modo producción activado`);
+    
+    // Verificar que el build existe
+    const buildPath = path.join(__dirname, 'build');
+    const fs = require('fs');
+    if (fs.existsSync(buildPath)) {
+      console.log(`✅ Build encontrado en: ${buildPath}`);
+    } else {
+      console.log(`❌ Build no encontrado en: ${buildPath}`);
+    }
   }
 });
 
