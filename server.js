@@ -12,54 +12,34 @@ app.use(cors());
 console.log('🚀 Iniciando servidor...');
 console.log('📁 Directorio actual:', __dirname);
 console.log('🌍 Puerto:', PORT);
-console.log('🌍 Entorno:', process.env.NODE_ENV);
 
 // Ruta de health check
 app.get('/api/health', (req, res) => {
   console.log('✅ Health check solicitado');
   res.json({ 
     status: 'healthy',
-    timestamp: new Date().toISOString(),
-    environment: process.env.NODE_ENV || 'development'
-  });
-});
-
-// Ruta de prueba
-app.get('/api/test', (req, res) => {
-  console.log('✅ Test endpoint solicitado');
-  res.json({ 
-    message: 'Backend funcionando correctamente',
     timestamp: new Date().toISOString()
   });
 });
 
-// API de contacto simplificada
-app.post('/api/contact', async (req, res) => {
+// API de contacto
+app.post('/api/contact', (req, res) => {
   console.log('📧 Contacto solicitado:', req.body);
   
-  try {
-    const { name, email, message } = req.body;
+  const { name, email, message } = req.body;
 
-    if (!name || !email || !message) {
-      return res.status(400).json({ 
-        success: false, 
-        message: 'Todos los campos son requeridos' 
-      });
-    }
-
-    console.log('✅ Contacto procesado correctamente');
-    res.json({ 
-      success: true, 
-      message: 'Mensaje recibido correctamente (modo de prueba)'
-    });
-
-  } catch (error) {
-    console.error('❌ Error en contacto:', error);
-    res.status(500).json({ 
+  if (!name || !email || !message) {
+    return res.status(400).json({ 
       success: false, 
-      message: 'Error procesando el mensaje'
+      message: 'Todos los campos son requeridos' 
     });
   }
+
+  console.log('✅ Contacto procesado correctamente');
+  res.json({ 
+    success: true, 
+    message: 'Mensaje recibido correctamente'
+  });
 });
 
 // Servir archivos estáticos en producción
@@ -85,35 +65,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 // Iniciar servidor
-const server = app.listen(PORT, '0.0.0.0', () => {
+app.listen(PORT, '0.0.0.0', () => {
   console.log(`🚀 Servidor corriendo en puerto ${PORT}`);
-  console.log(`📧 Endpoint de contacto: http://localhost:${PORT}/api/contact`);
-  console.log(`🔍 Health check: http://localhost:${PORT}/api/health`);
   console.log(`✅ Servidor listo para recibir conexiones`);
-});
-
-// Manejo de errores
-process.on('uncaughtException', (err) => {
-  console.error('❌ Error no capturado:', err);
-});
-
-process.on('unhandledRejection', (reason, promise) => {
-  console.error('❌ Promesa rechazada no manejada:', reason);
-});
-
-// Manejo de señales para cierre limpio
-process.on('SIGTERM', () => {
-  console.log('🛑 Recibida señal SIGTERM, cerrando servidor...');
-  server.close(() => {
-    console.log('✅ Servidor cerrado correctamente');
-    process.exit(0);
-  });
-});
-
-process.on('SIGINT', () => {
-  console.log('🛑 Recibida señal SIGINT, cerrando servidor...');
-  server.close(() => {
-    console.log('✅ Servidor cerrado correctamente');
-    process.exit(0);
-  });
 }); 

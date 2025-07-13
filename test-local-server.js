@@ -1,4 +1,4 @@
-const { spawn } = require('child_process');
+clsconst { spawn } = require('child_process');
 const http = require('http');
 
 console.log('🧪 Probando servidor localmente...');
