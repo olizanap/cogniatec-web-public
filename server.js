@@ -9,14 +9,10 @@ const PORT = process.env.PORT || 8080;
 app.use(express.json());
 app.use(cors());
 
-// Logging para debug
 console.log('🚀 Iniciando servidor...');
 console.log('📁 Directorio actual:', __dirname);
-console.log('🌍 Variables de entorno:', {
-  PORT: process.env.PORT,
-  NODE_ENV: process.env.NODE_ENV,
-  EMAIL_USER: process.env.EMAIL_USER ? 'configurado' : 'no configurado'
-});
+console.log('🌍 Puerto:', PORT);
+console.log('🌍 Entorno:', process.env.NODE_ENV);
 
 // Ruta de health check
 app.get('/api/health', (req, res) => {
@@ -51,7 +47,6 @@ app.post('/api/contact', async (req, res) => {
       });
     }
 
-    // Por ahora solo devolvemos éxito sin enviar email
     console.log('✅ Contacto procesado correctamente');
     res.json({ 
       success: true, 
@@ -74,13 +69,11 @@ if (process.env.NODE_ENV === 'production') {
   const buildPath = path.join(__dirname, 'build');
   console.log('📁 Buscando build en:', buildPath);
   
-  // Verificar si existe el build
   const fs = require('fs');
   if (fs.existsSync(buildPath)) {
     console.log('✅ Build encontrado, sirviendo archivos estáticos');
     app.use(express.static(buildPath));
     
-    // Manejar rutas del frontend
     app.get('*', (req, res) => {
       res.sendFile(path.join(buildPath, 'index.html'));
     });
@@ -92,7 +85,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 // Iniciar servidor
-app.listen(PORT, '0.0.0.0', () => {
+const server = app.listen(PORT, '0.0.0.0', () => {
   console.log(`🚀 Servidor corriendo en puerto ${PORT}`);
   console.log(`📧 Endpoint de contacto: http://localhost:${PORT}/api/contact`);
   console.log(`🔍 Health check: http://localhost:${PORT}/api/health`);
@@ -106,4 +99,21 @@ process.on('uncaughtException', (err) => {
 
 process.on('unhandledRejection', (reason, promise) => {
   console.error('❌ Promesa rechazada no manejada:', reason);
+});
+
+// Manejo de señales para cierre limpio
+process.on('SIGTERM', () => {
+  console.log('🛑 Recibida señal SIGTERM, cerrando servidor...');
+  server.close(() => {
+    console.log('✅ Servidor cerrado correctamente');
+    process.exit(0);
+  });
+});
+
+process.on('SIGINT', () => {
+  console.log('🛑 Recibida señal SIGINT, cerrando servidor...');
+  server.close(() => {
+    console.log('✅ Servidor cerrado correctamente');
+    process.exit(0);
+  });
 }); 
