@@ -68,12 +68,12 @@ const ContactForm = () => {
     setLoading(true);
 
     try {
-      // Usar el backend local (mismo servidor)
-      const endpoint = '/api/contact';
+      // Usar Formspree en lugar del backend local
+      const formspreeEndpoint = 'https://formspree.io/f/xwpqkbbn';
       
-      console.log('📤 Enviando formulario a:', endpoint);
+      console.log('📤 Enviando formulario a Formspree:', formspreeEndpoint);
       
-      const response = await fetch(endpoint, {
+      const response = await fetch(formspreeEndpoint, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -81,7 +81,8 @@ const ContactForm = () => {
         body: JSON.stringify({
           name: form.name.trim(),
           email: form.email.trim().toLowerCase(),
-          message: form.message.trim()
+          message: form.message.trim(),
+          _subject: 'Nuevo mensaje de contacto - CogniaTEC'
         }),
       });
 
@@ -100,11 +101,12 @@ const ContactForm = () => {
         throw new Error(errorMessage);
       }
       
+      // Formspree devuelve un objeto con la propiedad 'ok' en lugar de 'success'
       const data = await response.json();
-      if (data.success) {
+      if (data.ok) {
         setSuccess(true);
         setForm({ name: '', email: '', message: '' });
-        console.log('✅ Mensaje enviado exitosamente:', data.messageId);
+        console.log('✅ Mensaje enviado exitosamente a través de Formspree');
       } else {
         throw new Error(data.message || 'Error en el envío');
       }
